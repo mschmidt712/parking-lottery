@@ -1,0 +1,45 @@
+<div class="container-fluid mt-4 d-flex justify-content-center flex-column">
+  <%= link_to "Select Winner", select_winner_home_index_path, class: "btn btn-primary" %>
+  <div class="d-flex justify-content-between mt-3">
+    <div class="col-4 border-right">
+      <h5 class="text-center">List of All the People Here</h5>
+        <ul class="list-group">
+          <% @employees.each do |emp| %>
+            <% if emp.previousWinner %>
+              <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                <%= emp.name %>
+                <div>
+                  <%= link_to 'available', employee_path(emp.id), id: emp.id, :method => :put, class: "btn btn-outline-info" %>
+                  <%= link_to 'x', employee_path(emp.id), id: emp.id, :method => :delete, class: "btn btn-outline-danger" %>
+                </div>
+              </li>
+            <% else %>
+              <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
+                <%= emp.name %>
+                <div>
+                  <%= link_to 'unavailable', employee_path(emp.id), id: emp.id, :method => :put, class: "btn btn-outline-info" %>
+                  <%= link_to 'x', employee_path(emp.id), id: emp.id, :method => :delete, class: "btn btn-outline-danger" %>
+                </div>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+    </div>
+    <div class="col-4">
+      <h5 class="text-center">List of Available People for Selection</h5>
+      <ul class="list-group">
+        <% @availableEmps.each do |emp| %>
+          <li class="list-group-item list-group-item-success"><%= emp.name %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="col-4">
+      <h5 class="text-center">List of People Who Have Already Won</h5>
+      <ul class="list-group">
+      <% @unavailableEmps.each do |emp| %>
+        <li class="list-group-item list-group-item-danger"><%= emp.name %></li>
+      <% end %>
+    </ul>
+    </div>
+  </div>
+</div>
